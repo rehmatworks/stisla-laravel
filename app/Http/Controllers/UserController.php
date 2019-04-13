@@ -122,7 +122,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        if(env('APP_ENV') !== 'demo')
+        {
+            $user->delete();
+        }
     }
 
     public function roles()

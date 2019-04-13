@@ -35,7 +35,7 @@
             @endif
             @yield('content')
             <div class="simple-footer">
-              Copyright &copy; Stisla 2018
+              Copyright &copy; {{ env('APP_NAME') }} {{ date('Y') }}
             </div>
           </div>
         </div>
