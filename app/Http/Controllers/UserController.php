@@ -123,7 +123,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(!App::environment('demo'))
+        if(!App::environment('demo') && !$user->isme)
         {
             $user->delete();
         } else
