@@ -28,6 +28,11 @@
                 {{ session()->get('info') }}
             </div>
             @endif
+            @if(session()->has('status'))
+            <div class="alert alert-info">
+                {{ session()->get('status') }}
+            </div>
+            @endif
             @yield('content')
             <div class="simple-footer">
               Copyright &copy; Stisla 2018
