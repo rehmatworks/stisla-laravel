@@ -18,14 +18,14 @@
                                 <th>Reg. Date</th>
                                 <th></th>
                             </tr>
-                            <tr v-for="user in users">
+                            <tr v-for="user, index in users">
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.created_at }}</td>
                                 <td class="text-right">
-                                    <a v-if="$parent.userCan('delete-users') && !user.isme" href="javascript:void(0)" class="btn btn-danger">
+                                    <button v-if="$parent.userCan('delete-users') && !user.isme" @click="deleteUser(user.id, index)" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
-                                    </a>
+                                    </button>
                                     <a v-if="$parent.userCan('edit-users')" v-bind:href="user.profilelink" class="btn btn-primary">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -83,6 +83,20 @@ export default {
             }).catch((err) => {
                 _this.loading = false;
             });
+        },
+        deleteUser(userId, index) {
+            let _this = this;
+            this.$iosConfirm({
+                title: 'Are you sure?',
+                text: 'The user and their associated data will be permanently deleted. Proceed?'
+            }).then(function() {
+                axios.delete(_this.$parent.MakeUrl('admin/users/'+userId)).then((res) => {
+                    _this.users.splice(index, 1);
+                    _this.total = _this.total - 1;
+                });
+            }).catch(error => {
+
+            })
         }
     }
 }
