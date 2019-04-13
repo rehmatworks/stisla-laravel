@@ -94,21 +94,24 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user->update($request->only([
-            'name', 'email'
-        ]));
-
-        if($request->password && App::environment('demo'))
+        if(!App::environment('demo'))
         {
-            $user->update(['password' => Hash::make($request->password)]);
-        }
+            $user->update($request->only([
+                'name', 'email'
+            ]));
 
-        if($request->role && $request->user()->can('edit-users') && !$user->isme)
-        {
-            $role = Role::find($request->role);
-            if($role)
+            if($request->password)
             {
-                $user->syncRoles([$role]);
+                $user->update(['password' => Hash::make($request->password)]);
+            }
+
+            if($request->role && $request->user()->can('edit-users') && !$user->isme)
+            {
+                $role = Role::find($request->role);
+                if($role)
+                {
+                    $user->syncRoles([$role]);
+                }
             }
         }
 
