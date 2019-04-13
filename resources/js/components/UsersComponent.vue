@@ -93,10 +93,14 @@ export default {
                 axios.delete(_this.$parent.MakeUrl('admin/users/'+userId)).then((res) => {
                     _this.users.splice(index, 1);
                     _this.total = _this.total - 1;
+                    _this.loadUsers();
+                }).catch(error => {
+                    _this.$iosAlert({
+                        'title': 'Error',
+                        'text': error.response.data.message
+                    });
                 });
-            }).catch(error => {
-
-            })
+            });
         }
     }
 }

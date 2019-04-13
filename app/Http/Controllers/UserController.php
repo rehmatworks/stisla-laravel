@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\{UserUpdateRequest,UserAddRequest};
 use Spatie\Permission\Models\Role;
+use App;
 
 class UserController extends Controller
 {
@@ -97,7 +98,7 @@ class UserController extends Controller
             'name', 'email'
         ]));
 
-        if($request->password && strtolower(env('APP_ENV')) !== 'demo')
+        if($request->password && App::environment('demo'))
         {
             $user->update(['password' => Hash::make($request->password)]);
         }
@@ -122,9 +123,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(env('APP_ENV') !== 'demo')
+        if(!App::environment('demo'))
         {
             $user->delete();
+        } else
+        {
+            return response()->json(['message' => 'User accounts cannot be deleted in demo mode.'], 400);
         }
     }
 
