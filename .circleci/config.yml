@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.3.3
+    steps:
+      - checkout
+      - run:
+          name: Install rsync
+          command: sudo apt-get install rsync
+      - run:
+          name: Deploy to Server
+          command: |
+            rsync -e "ssh -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=.circleci --exclude=vendor --exclude=storage -va --exclude=.env --delete ./ opensource@stisla.rehmat.works:/srv/users/opensource/apps/stisla/
+            ssh -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" opensource@stisla.rehmat.works <<'ENDSSH'
+            cd /srv/users/opensource/apps/stisla/
+            composer update
+            php artisan migrate:refresh --seed
+            php artisan cache:clear
+            php artisan config:clear
+            ENDSSH
