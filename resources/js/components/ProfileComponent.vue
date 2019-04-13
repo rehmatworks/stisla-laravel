@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row mb-4" v-if="$parent.userCan('edit-users')">
+                <div class="form-group row mb-4" v-if="$parent.userCan('edit-users') && !getUserdata('isme')">
                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
                     <div class="col-sm-12 col-md-7">
                         <select class="form-control" v-model="role" v-bind:class="{'is-invalid': errors.role}">

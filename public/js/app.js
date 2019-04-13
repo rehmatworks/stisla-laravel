@@ -38321,7 +38321,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.$parent.userCan("edit-users")
+          _vm.$parent.userCan("edit-users") && !_vm.getUserdata("isme")
             ? _c("div", { staticClass: "form-group row mb-4" }, [
                 _c(
                   "label",
