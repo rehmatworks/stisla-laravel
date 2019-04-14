@@ -4,7 +4,7 @@ Stisla is the most-awesome admin panel I've seen so far. As I love this template
 ## Installation
 Clone the repo:
 ```shell
-gite clone https://github.com/rehmatworks/stisla-laravel
+git clone https://github.com/rehmatworks/stisla-laravel.git
 ```
 
 Install composer packages:
@@ -12,7 +12,7 @@ Install composer packages:
 composer update
 ```
 
-Rename .env.example to .env, update the environmental variables and set an app key:
+Copy and rename .env.example to .env, update the environmental variables and set an app key:
 ```shell
 php artisan key:generate
 ```
@@ -32,7 +32,7 @@ php artisan migrate:refresh --seed
 
 Note that seeding the database is compulsory as it will create the necessary roles and permissions for the user CRUD provided by the project.
 
-Visit hxxp://yoursite.com/login to sign in using below credentials:
+Visit <div style="display: inline">http://yoursite.com/login</div> to sign in using below credentials:
 
 ### Demo
 URL: https://stisla.rehmat.works
